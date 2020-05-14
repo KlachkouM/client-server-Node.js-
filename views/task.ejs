@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+        
+    <meta charset="utf-8"/>
+</head>
+<body>
+<%= typeof msg !== 'undefined' ? msg : '' %>
+<form action="/" method="get">
+    <input type="radio" name="filter" value="all" <%= filterValue === 'all' ? 'checked' : '' %>>All<Br>
+    <input type="radio" name="filter" value="active" <%= filterValue === 'active' ? 'checked' : '' %>>Active<Br>
+    <input type="radio" name="filter" value="done" <%= filterValue === 'done' ? 'checked' : '' %>>Done<Br>
+    <input type="submit" value="Применить фильтр">
+</form>
+<br>
+
+<% tasks.forEach(task => { %>
+<div>
+    <% if(!task.active) { %>
+        <span><s><%= task.title %></s></span>
+    <% }else { %>
+        <span><%= task.title %></span>
+    <% }
+
+    if(task.files) {
+    task.files.forEach(file => { %>
+        <a href="<%= file.path %>" download><span><%= file.title %></span></a>
+    <% })} if(task.date) { %>
+        <span><%= task.date %></span>
+    <% }
+
+
+    }) %>
+</div>
+<hr>
+<form action="/" method="post" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Что вы хотите сделать?" required><br><br>
+    <input type="date" name="date"><br><br>
+    <input type="radio" name="done">done<br><br>
+    <input type="file" name="file"><br><br>
+    <input type="submit" value="Добавить">
+</form>
+</body>
+<html>
